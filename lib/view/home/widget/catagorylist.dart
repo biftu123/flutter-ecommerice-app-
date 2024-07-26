@@ -7,7 +7,7 @@ import 'package:foodorder/view/catagory/AllCatagory.dart';
 import 'package:get/get.dart';
 
 class Catagorylist extends StatefulWidget {
-  const Catagorylist({Key? key}) : super(key: key);
+  const Catagorylist({super.key});
 
   @override
   State<Catagorylist> createState() => _CatagorylistState();

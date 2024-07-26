@@ -20,7 +20,12 @@ class Homepage extends StatelessWidget {
           )),
       body: SafeArea(
         child: CustomContainer(
-          cotaincontaainer:const Catagorylist(),
+          cotaincontaainer:Column(
+            children:[
+      Catagorylist(),
+Heading(text:'neary resturant',ontap:(){})
+            ]
+          ),
         ),
       ),
     );
