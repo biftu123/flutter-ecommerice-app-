@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/Common/custom_container.dart';
 import 'package:foodorder/Common/customappbar.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/view/home/widget/catagorylist.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -12,14 +13,14 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kPrimary,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(130.h),
-          child:  Container(
-            height: 130.h,
+          preferredSize: Size.fromHeight(110.h),
+          child:  SizedBox(
+            height: 110.h,
             child:const Customappbar(),
           )),
       body: SafeArea(
         child: CustomContainer(
-          cotaincontaainer: Container(),
+          cotaincontaainer:const Catagorylist(),
         ),
       ),
     );

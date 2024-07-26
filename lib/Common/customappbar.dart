@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foodorder/Common/custom_container.dart';
+
 import 'package:foodorder/constant/constant.dart';
 
 class Customappbar extends StatelessWidget {
@@ -8,9 +8,12 @@ class Customappbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-        cotaincontaainer: Container(
+    return  Container(
+      color: kwhiteoff,
+      height: 110.h,
+        child: Container(
       margin: EdgeInsets.only(top: 20.h),
+      padding: EdgeInsets.only(right: 10.h,left: 10.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,7 +26,7 @@ class Customappbar extends StatelessWidget {
                 backgroundColor: ksecondary,
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 6.h, left: 8.h),
+                padding: EdgeInsets.only(bottom: 6.h, left: 15.h),
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
