@@ -10,9 +10,7 @@
 analyzer:
   errors:
     camel_case_types: ignore
-analyzer:
-  errors:
-    camel_case_types: ignore
+
 include: package:flutter_lints/flutter.yaml
 
 linter:

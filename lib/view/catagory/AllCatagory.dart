@@ -49,7 +49,7 @@ class AllCatagory extends StatelessWidget {
                         color: kgray,
                         fontWeight: FontWeight.normal),
                   ),
-                  trailing: const Icon(Icons.arrow_outward_outlined),
+                  trailing: Icon(Icons.arrow_outward_outlined),
                 ),
               );
             }),

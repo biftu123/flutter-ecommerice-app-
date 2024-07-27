@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/Common/custom_container.dart';
 import 'package:foodorder/Common/customappbar.dart';
+import 'package:foodorder/Common/Heading.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/view/home/widget/catagorylist.dart';
 
@@ -22,8 +23,12 @@ class Homepage extends StatelessWidget {
         child: CustomContainer(
           cotaincontaainer:Column(
             children:[
-      Catagorylist(),
-Heading(text:'neary resturant',ontap:(){})
+          const Catagorylist(),
+          Heading(text:'Neary by resturant',ontap:(){}),
+          Heading(text:'Try someting new',ontap:(){}),
+          Heading(text:'Fastest food nearest you',ontap:(){}),
+      
+
             ]
           ),
         ),

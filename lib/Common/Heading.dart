@@ -1,22 +1,22 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import 'package:foodorder/constant/constant.dart';
 
-// ignore: camel_case_types
 class Heading extends StatelessWidget {
   const Heading({
     Key? key,
     required this.text,
-    this.ontap,
+   required this.ontap,
   }) : super(key: key);
   final String text;
    final void Function()? ontap;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 194,
+
       padding: EdgeInsets.symmetric(horizontal: 12.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,7 +31,7 @@ class Heading extends StatelessWidget {
           ),
           GestureDetector(
             onTap: ontap,
-            child: const Icon(AntDesign.appstore1,),
+            child:  Icon(AntDesign.appstore1,color:ksecondary),
           )
         ],
       ),

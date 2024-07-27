@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:get/get.dart';
+
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/controller/pageindex.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:foodorder/view/cart/cartpage.dart';
 import 'package:foodorder/view/home/homepage.dart';
 import 'package:foodorder/view/profile/profilepage.dart';
 import 'package:foodorder/view/search/searchpage.dart';
-import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatelessWidget {
