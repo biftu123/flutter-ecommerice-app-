@@ -5,6 +5,7 @@ import 'package:foodorder/Common/customappbar.dart';
 import 'package:foodorder/Common/Heading.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/view/home/widget/catagorylist.dart';
+import 'package:foodorder/view/home/widget/foodlist.dart';
 import 'package:foodorder/view/home/widget/nearyrestuarant%20list.dart';
 
 class Homepage extends StatelessWidget {
@@ -22,16 +23,22 @@ class Homepage extends StatelessWidget {
           )),
       body: SafeArea(
         child: CustomContainer(
-          cotaincontaainer:Column(
-            children:[
-          const Catagorylist(),
-          Heading(text:'Neary by resturant',ontap:(){}),
-         const Nearyrestuarantlist(),
-          Heading(text:'Try someting new',ontap:(){}),
-          Heading(text:'Fastest food nearest you',ontap:(){}),
-      
-
-            ]
+          cotaincontaainer:SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: 
+              Column(
+                children:[
+              const Catagorylist(),
+              Heading(text:'Neary by resturant',ontap:(){}),
+                       const Nearyrestuarantlist(),
+              Heading(text:'Try someting new',ontap:(){}),
+              const Foodlist(),
+              Heading(text:'Fastest food nearest you',ontap:(){}),
+                     
+                   const Foodlist(),
+                ]
+              ),
+            
           ),
         ),
       ),
