@@ -7,10 +7,10 @@ import 'package:foodorder/constant/constant.dart';
 
 class Heading extends StatelessWidget {
   const Heading({
-    Key? key,
+    super.key,
     required this.text,
    required this.ontap,
-  }) : super(key: key);
+  });
   final String text;
    final void Function()? ontap;
   @override
@@ -31,7 +31,7 @@ class Heading extends StatelessWidget {
           ),
           GestureDetector(
             onTap: ontap,
-            child:  Icon(AntDesign.appstore1,color:ksecondary),
+            child:  const Icon(AntDesign.appstore1,color:ksecondary),
           )
         ],
       ),
