@@ -5,6 +5,7 @@ import 'package:foodorder/Common/customappbar.dart';
 import 'package:foodorder/Common/Heading.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/view/home/widget/catagorylist.dart';
+import 'package:foodorder/view/home/widget/nearyrestuarant%20list.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -25,6 +26,7 @@ class Homepage extends StatelessWidget {
             children:[
           const Catagorylist(),
           Heading(text:'Neary by resturant',ontap:(){}),
+         const Nearyrestuarantlist(),
           Heading(text:'Try someting new',ontap:(){}),
           Heading(text:'Fastest food nearest you',ontap:(){}),
       

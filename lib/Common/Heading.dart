@@ -1,3 +1,5 @@
+// ignore: file_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,8 +10,9 @@ import 'package:foodorder/constant/constant.dart';
 class Heading extends StatelessWidget {
   const Heading({
     super.key,
+  
     required this.text,
-   required this.ontap,
+    required this.ontap,
   });
   final String text;
    final void Function()? ontap;
