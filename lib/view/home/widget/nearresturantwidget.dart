@@ -11,7 +11,7 @@ class Nearresturantwidget extends StatelessWidget {
     required this.image,
     required this.logo,
     required this.time,
-    required this.address,
+  
     required this.rating,
     this.ontap,
   });
@@ -19,7 +19,7 @@ class Nearresturantwidget extends StatelessWidget {
   final String image;
   final String logo;
   final String time;
-  final String address;
+  
   final String rating;
 final void Function()? ontap;
   @override
@@ -71,7 +71,7 @@ final void Function()? ontap;
            Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-                         Text(address,style: const TextStyle(fontSize: 9,color: kdark,fontWeight: FontWeight.w500),),
+                         Text('delivery time',style: const TextStyle(fontSize: 9,color: kdark,fontWeight: FontWeight.w500),),
                                     Text(time,style: const TextStyle(fontSize: 9,color: kdark,fontWeight: FontWeight.w500),),
 
 

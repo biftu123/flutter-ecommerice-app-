@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:foodorder/Common/customshimmer.dart';
+import 'package:foodorder/constant/constant.dart';
 
-import 'package:foodorder/data/resturant.dart';
+
+import 'package:foodorder/model/hooks/nearresturantHooks.dart';
+import 'package:foodorder/model/othermodels/nearresturantmodel.dart';
 import 'package:foodorder/view/home/widget/nearresturantwidget.dart';
 
-class Nearyrestuarantlist extends StatelessWidget {
+class Nearyrestuarantlist extends HookWidget {
   const Nearyrestuarantlist({super.key});
 
   @override
   Widget build(BuildContext context) {
+     final Hookresult = fetchNearResturant('BUR123');
+    List<Nearrestuantmodel> resturantlist = Hookresult.data;
+    final isloading = Hookresult.isloading;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(nearbyRestaurants.length, (i) {
-          var resturant = nearbyRestaurants[i];
+      child: isloading?CustomShimmerWidget(width: width*0.75, height: 185):Row(
+        children:  List.generate(resturantlist.length, (i) {
+          var resturant = resturantlist[i];
           return Nearresturantwidget(
-            name: resturant['name'],
-            image: resturant['image'],
-            logo: resturant['logo'],
-            time: resturant['time'],
-            address: resturant['address'],
-            rating: resturant['rating'],
+            name: resturant.title,
+            image: resturant.imageUrl,
+            logo: resturant.logoUrl,
+            time: resturant.time,
+            
+            rating: resturant.ratingCount,
           );
         }),
       ),

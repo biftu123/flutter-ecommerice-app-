@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/model/othermodels/allresturantmodel.dart';
 
 // ignore: must_be_immutable
 class Resturanttile extends StatelessWidget {
   Resturanttile({super.key, required, required this.resturant});
-  var resturant;
+   Allrestuantmodel resturant;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,7 +32,7 @@ class Resturanttile extends StatelessWidget {
                         SizedBox(
                           width: 70.w,
                           height: 70.h,
-                          child: Image.network(resturant['image']),
+                          child: Image.network(resturant.imageUrl),
                         ),
                         Positioned(
                           bottom: 0,
@@ -60,21 +61,21 @@ class Resturanttile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        resturant['name'],
+                        resturant.title,
                         style: const TextStyle(
                             fontSize: 12,
                             color: kdark,
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        " DelveriyTime :${resturant['time']}",
+                        " DelveriyTime :${resturant.time}",
                         style: const TextStyle(
                             fontSize: 9,
                             color: kgray,
                             fontWeight: FontWeight.normal),
                       ),
                       Text(
-                        resturant['address'],
+                        resturant.coords.address,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontSize: 9,
@@ -94,9 +95,9 @@ class Resturanttile extends StatelessWidget {
               height: 19.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),
-                color: resturant['isAvalible']== true?kPrimary:kgray,
+                color: resturant.isAvailability== true?kPrimary:kgray,
               ),
-              child:resturant['isAvalible']== true? const Center(child: Text("Open",style:TextStyle(fontSize: 14,color: kwhiteoff,fontWeight: FontWeight.bold),) ): const Center(child: Text("Closed",style:TextStyle(fontSize: 14,color: kwhiteoff,fontWeight: FontWeight.bold))) ,
+              child:resturant.isAvailability== true? const Center(child: Text("Open",style:TextStyle(fontSize: 14,color: kwhiteoff,fontWeight: FontWeight.bold),) ): const Center(child: Text("Closed",style:TextStyle(fontSize: 14,color: kwhiteoff,fontWeight: FontWeight.bold))) ,
             ) )
         ],
       ),
