@@ -17,3 +17,4 @@ const ksecondaryColor = Color.fromARGB(255, 3, 112, 98);
 const kred = Color.fromARGB(255, 253, 1, 1);
 double height = 825.h;
 double width = 375.w;
+String baseurl = "http://192.168.100.4:3001";

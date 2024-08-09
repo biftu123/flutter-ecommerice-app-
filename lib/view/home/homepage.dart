@@ -12,9 +12,14 @@ import 'package:foodorder/view/home/widget/foodlist.dart';
 import 'package:foodorder/view/home/widget/nearyrestuarant%20list.dart';
 import 'package:get/get.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,18 +1,25 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/Common/backgroundContainer.dart';
+import 'package:foodorder/Common/customshimmer.dart';
 import 'package:foodorder/constant/constant.dart';
-import 'package:foodorder/data/catagory.dart';
+
+import 'package:foodorder/model/hooks/allcatagoryHook.dart';
+import 'package:foodorder/model/othermodels/allcatagorymodel.dart';
 import 'package:foodorder/view/catagory/catagorypage.dart';
 import 'package:get/get.dart';
 
-class AllCatagory extends StatelessWidget {
+class AllCatagory extends HookWidget {
   const AllCatagory({super.key});
 
   @override
   Widget build(BuildContext context) {
+     final Hookresult = allFetchCatagories();
+    List<Allcatagory> catagorylist = Hookresult.data;
+    final isloading = Hookresult.isloading;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -22,15 +29,15 @@ class AllCatagory extends StatelessWidget {
         ),
         backgroundColor: kwhiteoff,
       ),
-      body: Backgroundcontainer(
+      body: isloading?CustomShimmerWidget(height: height,width: width,):Backgroundcontainer(
         color: kwhiteoff,
         child: Container(
           height: height,
           padding: EdgeInsets.only(left: 12.w, top: 10.h),
           child: ListView(
             scrollDirection: Axis.vertical,
-            children: List.generate(foodCategories.length, (i) {
-              var catagory = foodCategories[i];
+            children: List.generate(catagorylist.length, (i) {
+              var catagory = catagorylist[i];
               return GestureDetector(
                 onTap: () {
                   Get.to(() => const Catagorypage());
@@ -39,11 +46,11 @@ class AllCatagory extends StatelessWidget {
                   leading: CircleAvatar(
                     radius: 18.r,
                     backgroundImage: NetworkImage(
-                      catagory['image'],
+                      catagory.imageUrl,
                     ),
                   ),
                   title: Text(
-                    catagory['name'],
+                    catagory.title,
                     style: const TextStyle(
                         fontSize: 14,
                         color: kgray,
