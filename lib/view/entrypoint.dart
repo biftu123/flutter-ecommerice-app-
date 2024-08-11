@@ -14,8 +14,9 @@ class MainScreen extends StatelessWidget {
   MainScreen({super.key});
   List<Widget> pageList = [
    const Homepage(),
+    const Searchpage(),
     const Cartpage(),
-   const Searchpage(),
+  
   const  Profilepage(),
   ];
   @override

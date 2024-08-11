@@ -1,18 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/Common/custom_container.dart';
+import 'package:foodorder/Common/customshimmer.dart';
+import 'package:foodorder/Common/resubletextfiled.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/controller/searchcontroller.dart';
+import 'package:foodorder/view/search/searchresult.dart';
+import 'package:get/get.dart';
 
-class Searchpage extends StatelessWidget {
+class Searchpage extends StatefulWidget {
   const Searchpage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimary,
-      appBar:PreferredSize(preferredSize:Size.fromHeight(130.h),child:Container(height: 130.h,)),
-      body: SafeArea(child: CustomContainer(cotaincontaainer: Container(),)),
+  State<Searchpage> createState() => _SearchpageState();
+}
 
-    );
+class _SearchpageState extends State<Searchpage> {
+  TextEditingController _search = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.put(searchFoodController());
+
+    return Obx(() => Scaffold(
+          backgroundColor: kPrimary,
+          appBar: AppBar(
+              elevation: 0.0,
+              toolbarHeight: 74.h,
+              automaticallyImplyLeading: false,
+              title: Padding(
+                padding: EdgeInsets.only(top: 12.h),
+                child: CustomTextFieldInContainer(
+                  controller: _search,
+                  hintText: 'search for Foods',
+                  suffixIcon: GestureDetector(
+                      onTap: () {
+                        if (controller.isTriggervalue == false) {
+                          controller.search(_search.text);
+                          controller.setTrigger(true);
+                        } else {
+                          controller.searchResult = null;
+                          controller.setTrigger(false);
+                          _search.clear();
+                        }
+                      },
+                      child: controller.isTriggervalue== false
+                          ? const Icon(
+                              Icons.search_outlined,
+                              color: kPrimary,
+                            )
+                          : const Icon(
+                              Icons.close_outlined,
+                              color: kred,
+                            )),
+                ),
+              )),
+          body: SafeArea(
+              child: controller.isLoadingValue
+                  ? CustomShimmerWidget(width: width , height: 70.h)
+                  : controller.searchResult == null
+                      ? CustomContainer(
+                          cotaincontaainer: Container(),
+                        )
+                      : const Searchresult()),
+        ));
   }
 }
