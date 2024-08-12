@@ -1,13 +1,15 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/controller/catagoryController.dart';
 import 'package:foodorder/model/hooks/resulthooks.dart';
 import 'package:foodorder/model/othermodels/apierror.dart';
 import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-FetchHook fetchRecomendationFood(String code) {
-  final catagoriesItem = useState<List<Recomendationfoodmodel>?>([]);
+FetchHook fetchRandmFoodByCatagory(String code) {
+  final controller = Get.put(Catagorycontroller());
+  final catagoriesItem = useState<Recomendationfoodmodel?>(null);
   final isLoading = useState<bool>(false);
   final error = useState<Exception?>(null);
   final apierror = useState<Apierror?>(null);
@@ -15,15 +17,15 @@ FetchHook fetchRecomendationFood(String code) {
   Future<void> fetchData() async {
     isLoading.value = true;
     try {
-      final url = '$baseurl/food/recomdation/$code';
+      final url = '$baseurl/food/random/${controller.titlevalue}/$code';
       print('API URL: $url');
       final response = await http.get(Uri.parse(url));
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        Recomendationfoodmodel result = Recomendationfoodmodel.fromJson(responseData);
-        catagoriesItem.value = [result]; // Wrap the single result in a list
+        // Parse the response JSON into a Recomendationfoodmodel object
+        final Recomendationfoodmodel result = Recomendationfoodmodel.fromJson(response.body as Map<String, dynamic>);
+        catagoriesItem.value = result;
       } else {
         apierror.value = apierrorFromJson(response.body);
       }
@@ -31,6 +33,7 @@ FetchHook fetchRecomendationFood(String code) {
       if (e is Exception) {
         error.value = e;
       } else {
+        // Handle the case where the error is not an Exception
         print('Error: $e');
       }
     } finally {
@@ -49,7 +52,7 @@ FetchHook fetchRecomendationFood(String code) {
   }
 
   return FetchHook(
-    data: catagoriesItem.value,
+    data: catagoriesItem.value != null ? [catagoriesItem.value!] : null,
     isloading: isLoading.value,
     error: error.value,
     refetch: refetch,

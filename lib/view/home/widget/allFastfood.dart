@@ -17,7 +17,7 @@ class Allfastfood extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-     final Hookresult = fetchallfoodFood('BUR123');
+     final Hookresult = fetchallfoodFood('DF001');
     List<Recomendationfoodmodel> Foodlist = Hookresult.data;
     final isloading = Hookresult.isloading;
     return Scaffold(

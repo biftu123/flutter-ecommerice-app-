@@ -1,14 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/model/hooks/resulthooks.dart';
 import 'package:foodorder/model/othermodels/apierror.dart';
-
-
 import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
 import 'package:http/http.dart' as http;
 
+// Parse the JSON response into a list of Recomendationfoodmodel objects
+List<Recomendationfoodmodel> recomendationfoodmodelListFromJson(String str) {
+  final jsonData = json.decode(str);
+  return List<Recomendationfoodmodel>.from(jsonData.map((item) => Recomendationfoodmodel.fromJson(item)));
+}
+
 FetchHook fetchallfoodFood(String code) {
-  final catagoriesItem = useState<List<Recomendationfoodmodel>?>([]);
+  final catagoriesItem = useState<List<Recomendationfoodmodel>?>(null);
   final isLoading = useState<bool>(false);
   final error = useState<Exception?>(null);
   final apierror = useState<Apierror?>(null);
@@ -22,7 +28,8 @@ FetchHook fetchallfoodFood(String code) {
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        catagoriesItem.value = recomendationfoodmodelFromJson(response.body);
+        final List<Recomendationfoodmodel> foodList = recomendationfoodmodelListFromJson(response.body);
+        catagoriesItem.value = foodList;
       } else {
         apierror.value = apierrorFromJson(response.body);
       }

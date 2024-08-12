@@ -3,6 +3,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/model/othermodels/allresturantmodel.dart';
+import 'package:foodorder/view/home/widget/resturantpage.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class Resturanttile extends StatelessWidget {
@@ -11,7 +13,12 @@ class Resturanttile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+ Get.to(() => Resturantpage(
+                          id: resturant.id,
+                        ));
+
+      },
       child: Stack(
         children: [
           Container(

@@ -11,17 +11,21 @@ class Searchresult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(searchFoodController());
-    return Obx(()=>Container(
-      padding: EdgeInsets.fromLTRB(12.h, 10.h, 12.h, 0),
-      height: height,
-      child: ListView.builder(
-          itemCount: controller.searchResult!.length,
-          itemBuilder: (context, i) {
-            final food = controller.searchResult![i];
+       final controller = Get.put(SearchFoodController());
+
+      return Container(
+        padding: EdgeInsets.fromLTRB(12.h, 10.h, 12.h, 0),
+        height: height,
+        child: ListView.builder(
+          key: UniqueKey(), // Add a UniqueKey to the ListView.builder
+           itemCount: controller.searchResult!.length,
+          itemBuilder: (context, index) {
+            final food = controller.searchResult![index];
             print(food.category);
             return Foodtile(food: food);
-          }),
-    ));
+          },
+        ),
+      );
+    
   }
 }

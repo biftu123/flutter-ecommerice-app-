@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/Common/backgroundContainer.dart';
 import 'package:foodorder/Common/customshimmer.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/controller/catagoryController.dart';
 
 import 'package:foodorder/model/hooks/allcatagoryHook.dart';
 import 'package:foodorder/model/othermodels/allcatagorymodel.dart';
@@ -20,6 +21,7 @@ class AllCatagory extends HookWidget {
      final Hookresult = allFetchCatagories();
     List<Allcatagory> catagorylist = Hookresult.data;
     final isloading = Hookresult.isloading;
+        final controller = Get.put(Catagorycontroller());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,7 +42,10 @@ class AllCatagory extends HookWidget {
               var catagory = catagorylist[i];
               return GestureDetector(
                 onTap: () {
+  controller.updatecatagory = catagory.id;
+                  controller.updattitle = catagory.title;
                   Get.to(() => const Catagorypage());
+                 
                 },
                 child: ListTile(
                   leading: CircleAvatar(

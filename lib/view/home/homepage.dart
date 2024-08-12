@@ -4,9 +4,11 @@ import 'package:foodorder/Common/custom_container.dart';
 import 'package:foodorder/Common/customappbar.dart';
 import 'package:foodorder/Common/Heading.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/controller/catagoryController.dart';
 import 'package:foodorder/view/home/widget/Recomdation.dart';
 import 'package:foodorder/view/home/widget/allFastfood.dart';
 import 'package:foodorder/view/home/widget/allnearresrurant.dart';
+import 'package:foodorder/view/home/widget/catagoryfoodlist.dart';
 import 'package:foodorder/view/home/widget/catagorylist.dart';
 import 'package:foodorder/view/home/widget/foodlist.dart';
 import 'package:foodorder/view/home/widget/nearyrestuarant%20list.dart';
@@ -20,9 +22,10 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  
+
   @override
   Widget build(BuildContext context) {
+     final controller = Get.put(Catagorycontroller());
     return Scaffold(
       backgroundColor: kPrimary,
       appBar: PreferredSize(
@@ -37,7 +40,9 @@ class _HomepageState extends State<Homepage> {
             scrollDirection: Axis.vertical,
             child: Column(children: [
               const Catagorylist(),
-              Heading(
+              Obx(()=> controller.catagoryvalue == ''? Column(
+                children: [
+                  Heading(
                   text: 'Neary by resturant',
                   ontap: () {
                     Get.to(() => const allnearresturant(),
@@ -57,6 +62,18 @@ class _HomepageState extends State<Homepage> {
                     duration: const Duration(microseconds: 900));
               }),
               const Foodlist(),
+                ],
+              ):CustomContainer(cotaincontaainer:Column(
+                children: [
+                   Heading(more: true,
+                    text: 'Explore ${controller.titlevalue} Catagory', ontap: () {
+                Get.to(() =>const Recomdation(),
+                     transition: Transition.fadeIn,
+                    duration: const Duration(microseconds: 900));
+              }),
+              const FoodCatagoryList()
+                ],
+              )))
             ]),
           ),
         ),
@@ -64,3 +81,5 @@ class _HomepageState extends State<Homepage> {
     );
   }
 }
+
+

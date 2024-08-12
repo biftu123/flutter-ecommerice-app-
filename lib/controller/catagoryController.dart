@@ -9,9 +9,9 @@ class Catagorycontroller extends GetxController {
   set updatecatagory(String value) {
     _catagory.value = value;
   }
-  final RxString _name = ''.obs;
-  String get namevalue => _catagory.value;
-  set updatemame(String value) {
-    _name.value = value;
+  final RxString _title = ''.obs;
+  String get titlevalue => _title.value;
+  set updattitle(String value) {
+    _title.value = value;
   }
 }

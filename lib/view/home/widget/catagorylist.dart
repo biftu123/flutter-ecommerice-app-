@@ -31,14 +31,14 @@ class Catagorylist extends HookWidget {
               onTap: () {
                 if (controller.catagoryvalue == category.id) {
                   controller.updatecatagory = '';
-                  controller.updatemame = '';
+                  controller.updattitle = '';
                 } else if (category.title == 'More') {
                   Get.to(() => const AllCatagory(),
                       transition: Transition.fadeIn,
                       duration: const Duration(microseconds: 900));
                 } else {
                   controller.updatecatagory = category.id;
-                  controller.updatemame = category.title;
+                  controller.updattitle = category.title;
                 }
               },
               child: Obx(
