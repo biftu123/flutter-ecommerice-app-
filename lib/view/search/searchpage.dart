@@ -32,6 +32,7 @@ class _SearchpageState extends State<Searchpage> {
           padding: EdgeInsets.only(top: 12.h),
           child: CustomTextFieldInContainer(
             controller: _searchController,
+            maxline: 1,
             hintText: 'Search for Foods',
             suffixIcon: GestureDetector(
               onTap: () {

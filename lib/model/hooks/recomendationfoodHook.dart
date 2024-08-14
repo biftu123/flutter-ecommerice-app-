@@ -21,9 +21,11 @@ FetchHook fetchRecomendationFood(String code) {
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        Recomendationfoodmodel result = Recomendationfoodmodel.fromJson(responseData);
-        catagoriesItem.value = [result]; // Wrap the single result in a list
+        final jsonData =
+            jsonDecode(response.body) as List<dynamic>; // Decode as list
+        catagoriesItem.value = jsonData
+            .map((item) => Recomendationfoodmodel.fromJson(item))
+            .toList(); // Wrap the single result in a list
       } else {
         apierror.value = apierrorFromJson(response.body);
       }

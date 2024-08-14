@@ -6,10 +6,11 @@ import 'package:foodorder/model/othermodels/apierror.dart';
 import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert'; // Import for jsonDecode
 
 FetchHook fetchRandmFoodByCatagory(String code) {
   final controller = Get.put(Catagorycontroller());
-  final catagoriesItem = useState<Recomendationfoodmodel?>(null);
+  final catagoriesItem = useState<List<Recomendationfoodmodel>?>([]);
   final isLoading = useState<bool>(false);
   final error = useState<Exception?>(null);
   final apierror = useState<Apierror?>(null);
@@ -23,9 +24,8 @@ FetchHook fetchRandmFoodByCatagory(String code) {
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        // Parse the response JSON into a Recomendationfoodmodel object
-        final Recomendationfoodmodel result = Recomendationfoodmodel.fromJson(response.body as Map<String, dynamic>);
-        catagoriesItem.value = result;
+        final jsonData = jsonDecode(response.body) as List<dynamic>; // Decode as list
+        catagoriesItem.value = jsonData.map((item) => Recomendationfoodmodel.fromJson(item)).toList();
       } else {
         apierror.value = apierrorFromJson(response.body);
       }
@@ -52,7 +52,7 @@ FetchHook fetchRandmFoodByCatagory(String code) {
   }
 
   return FetchHook(
-    data: catagoriesItem.value != null ? [catagoriesItem.value!] : null,
+    data: catagoriesItem.value,
     isloading: isLoading.value,
     error: error.value,
     refetch: refetch,

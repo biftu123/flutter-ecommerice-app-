@@ -15,7 +15,7 @@ class Catagorypage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Hookresult = fetchRandmFoodByCatagory('BUR123');
+    final Hookresult = fetchRandmFoodByCatagory('DF001');
     List<Recomendationfoodmodel> Foodlist = Hookresult.data;
     final isloading = Hookresult.isloading;
  final controller = Get.put(Catagorycontroller());

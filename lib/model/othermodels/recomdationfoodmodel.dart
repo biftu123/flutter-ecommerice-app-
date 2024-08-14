@@ -14,7 +14,7 @@ class Recomendationfoodmodel {
   final double price;
   final List<Additive> additives;
   final String ratingCount;
-  final int v;
+  
 
   Recomendationfoodmodel({
     required this.id,
@@ -32,7 +32,7 @@ class Recomendationfoodmodel {
     required this.price,
     required this.additives,
     required this.ratingCount,
-    required this.v,
+    
   });
 
   factory Recomendationfoodmodel.fromJson(Map<String, dynamic> json) {
@@ -55,7 +55,7 @@ class Recomendationfoodmodel {
       price: json['price'].toDouble(),
       additives: additives,
       ratingCount: json['ratingCount'],
-      v: json['__v'],
+      
     );
   }
 }

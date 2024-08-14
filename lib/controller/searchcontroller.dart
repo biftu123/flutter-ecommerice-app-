@@ -31,8 +31,14 @@ class SearchFoodController extends GetxController {
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse = json.decode(response.body);
-        searchResult = jsonResponse.map((data) => Recomendationfoodmodel.fromJson(data)).toList();
-        print(searchResult);
+
+        if (jsonResponse != null && jsonResponse is List) {
+  
+          searchResult = jsonResponse.map((data) => Recomendationfoodmodel.fromJson(data)).toList();
+          print(searchResult);
+        } else {
+          print('Invalid data format received');
+        }
       } else {
         final errorResponse = apierrorFromJson(response.body);
         debugPrint('Error: ${errorResponse.message}');
