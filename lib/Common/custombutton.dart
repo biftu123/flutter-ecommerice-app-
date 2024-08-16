@@ -10,7 +10,7 @@ class CustomButton extends StatelessWidget {
   final double borderRadius;
 
   const CustomButton({
-    Key? key,
+    super.key,
     this.child,
     this.onPressed,
     this.color = Colors.blue,
@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
     this.width = double.infinity,
     this.height = 50.0,
     this.borderRadius = 8.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,7 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child:  Center(
-          child:   child != null
-              ?  child
-              :  Text(
+          child:   child ?? Text(
                   'Button',
                   style: TextStyle(
                     color: textColor,

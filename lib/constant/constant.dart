@@ -18,3 +18,9 @@ const kred = Color.fromARGB(255, 253, 1, 1);
 double height = 825.h;
 double width = 375.w;
 String baseurl = "http://192.168.100.4:3001";
+final List<String> verificationReasons = [
+    'To confirm the phone number for order updates and notifications.',
+    'Ensure accurate delivery details for the food order.',
+    'Prevent order mix-ups and delays by verifying contact information.',
+    'Enhance customer service by having a verified contact number for support.',
+  ];

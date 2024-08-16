@@ -9,7 +9,7 @@ import 'package:foodorder/view/search/searchresult.dart';
 import 'package:get/get.dart';
 
 class Searchpage extends StatefulWidget {
-  const Searchpage({Key? key});
+  const Searchpage({super.key });
 
   @override
   State<Searchpage> createState() => _SearchpageState();

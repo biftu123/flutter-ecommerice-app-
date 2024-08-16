@@ -10,13 +10,15 @@ import 'package:get/get.dart';
 class Foodtile extends StatelessWidget {
   final Recomendationfoodmodel food;
 
-  Foodtile({Key? key, required this.food}) : super(key: key);
+  const Foodtile({super.key, required this.food});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => Foodpage(food: food));
+         
+          Get.to(() => Foodpage(food: food));
+        
       },
       child: Stack(
         children: [
@@ -148,7 +150,7 @@ class Foodtile extends StatelessWidget {
             child: Container(
               width: 30.h,
               height: 30.h,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: ksecondary,
               ),

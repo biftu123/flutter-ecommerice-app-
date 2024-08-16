@@ -5,13 +5,13 @@ import 'package:foodorder/constant/constant.dart';
 
 class Foodwidget extends StatelessWidget {
   const Foodwidget({
-    Key? key,
+    super.key,
     required this.name,
     required this.time,
     required this.price,
     required this.image,
     this.ontap,
-  }) : super(key: key);
+  });
   final String name;
   final String time;
   final String price;
@@ -64,7 +64,7 @@ class Foodwidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               
-              Text("delivery time",style: const TextStyle(fontSize: 12,color: kdark,fontWeight: FontWeight.w500),),
+              const Text("delivery time",style: TextStyle(fontSize: 12,color: kdark,fontWeight: FontWeight.w500),),
           Text(time,style: const TextStyle(fontSize: 12,color: kdark,fontWeight: FontWeight.w500),),
           
 

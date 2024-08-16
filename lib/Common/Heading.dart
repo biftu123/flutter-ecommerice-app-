@@ -7,11 +7,11 @@ import 'package:foodorder/constant/constant.dart';
 
 class Heading extends StatelessWidget {
   const Heading({
-    Key? key,
+    super.key,
     required this.text,
     required this.ontap,
     this.more,
-  }) : super(key: key);
+  });
   final String text;
   final void Function()? ontap;
   final bool? more;

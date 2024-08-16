@@ -15,7 +15,7 @@ class Resturanttile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
  Get.to(() => Resturantpage(
-                          id: resturant.id,
+                          restunarant: resturant,
                         ));
 
       },

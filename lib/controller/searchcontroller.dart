@@ -32,7 +32,7 @@ class SearchFoodController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse = json.decode(response.body);
 
-        if (jsonResponse != null && jsonResponse is List) {
+        if (jsonResponse is List) {
   
           searchResult = jsonResponse.map((data) => Recomendationfoodmodel.fromJson(data)).toList();
           print(searchResult);

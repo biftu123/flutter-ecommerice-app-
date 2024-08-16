@@ -19,7 +19,7 @@ class FoodCatagoryList extends HookWidget {
         ? CustomShimmerWidget(width: width, height: height * 0.8)
         : Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.8, // Adjust the height as needed
               child: ListView(
                 scrollDirection: Axis.vertical,

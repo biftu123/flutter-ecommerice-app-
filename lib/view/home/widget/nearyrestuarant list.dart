@@ -4,7 +4,7 @@ import 'package:foodorder/Common/customshimmer.dart';
 import 'package:foodorder/constant/constant.dart';
 
 import 'package:foodorder/model/hooks/nearresturantHooks.dart';
-import 'package:foodorder/model/othermodels/nearresturantmodel.dart';
+import 'package:foodorder/model/othermodels/allresturantmodel.dart';
 import 'package:foodorder/view/home/widget/nearresturantwidget.dart';
 import 'package:foodorder/view/home/widget/resturantpage.dart';
 import 'package:get/get.dart';
@@ -15,7 +15,7 @@ class Nearyrestuarantlist extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final Hookresult = fetchNearResturant('BUR123');
-    List<Nearrestuantmodel> resturantlist = Hookresult.data;
+    List<Allrestuantmodel> resturantlist = Hookresult.data;
     final isloading = Hookresult.isloading;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -27,7 +27,7 @@ class Nearyrestuarantlist extends HookWidget {
                 return Nearresturantwidget(
                   ontap: () {
                     Get.to(() => Resturantpage(
-                          id: resturant.id,
+                          restunarant: resturant,
                         ));
                   },
                   name: resturant.title,

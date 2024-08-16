@@ -13,8 +13,8 @@ class CustomTextFieldInContainer extends StatelessWidget {
   final String? Function(String?)? validator;
   final VoidCallback? onEditingComplete;
   final int? maxline;
-  CustomTextFieldInContainer({
-    Key? key,
+  const CustomTextFieldInContainer({
+    super.key,
     this.controller,
     this.hintText,
     this.keyboardType = TextInputType.text,
@@ -24,7 +24,7 @@ class CustomTextFieldInContainer extends StatelessWidget {
     this.validator,
     this.onEditingComplete,
     required this.maxline,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

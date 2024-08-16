@@ -71,7 +71,7 @@ final void Function()? ontap;
            Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-                         Text('delivery time',style: const TextStyle(fontSize: 9,color: kdark,fontWeight: FontWeight.w500),),
+                         const Text('delivery time',style: TextStyle(fontSize: 9,color: kdark,fontWeight: FontWeight.w500),),
                                     Text(time,style: const TextStyle(fontSize: 9,color: kdark,fontWeight: FontWeight.w500),),
 
 

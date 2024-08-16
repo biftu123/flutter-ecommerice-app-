@@ -1,14 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/model/hooks/resulthooks.dart';
 import 'package:foodorder/model/othermodels/apierror.dart';
-import 'package:foodorder/model/othermodels/allresturantmodel.dart';
-
-
+import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
 import 'package:http/http.dart' as http;
 
-FetchHook fetchNearResturant(String code) {
-  final catagoriesItem = useState<List<Allrestuantmodel>?>([]);
+// Parse the JSON response into a list of Recomendationfoodmodel objects
+
+
+FetchHook fetchresturantfoodbyId(String id) {
+   final catagoriesItem = useState<List<Recomendationfoodmodel>?>([]);
   final isLoading = useState<bool>(false);
   final error = useState<Exception?>(null);
   final apierror = useState<Apierror?>(null);
@@ -16,13 +19,15 @@ FetchHook fetchNearResturant(String code) {
   Future<void> fetchData() async {
     isLoading.value = true;
     try {
-      final url = '$baseurl/resturant/random/$code';
+      final url = '$baseurl/food/resturant/$id';
       print('API URL: $url');
       final response = await http.get(Uri.parse(url));
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        catagoriesItem.value = allrestuantmodelFromJson(response.body);
+        
+               final jsonData = jsonDecode(response.body) as List<dynamic>; // Decode as list
+        catagoriesItem.value = jsonData.map((item) => Recomendationfoodmodel.fromJson(item)).toList();
       } else {
         apierror.value = apierrorFromJson(response.body);
       }

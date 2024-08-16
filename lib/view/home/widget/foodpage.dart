@@ -1,21 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+
 import 'package:foodorder/Common/custombutton.dart';
 import 'package:foodorder/Common/resubletextfiled.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/controller/foodcontroller.dart';
+import 'package:foodorder/model/hooks/allresturantHook.dart';
+import 'package:foodorder/model/hooks/getresturantbyid.dart';
+import 'package:foodorder/model/othermodels/allresturantmodel.dart';
 
 import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
+import 'package:foodorder/view/auth/phoneverfication.dart';
 import 'package:foodorder/view/home/widget/resturantpage.dart';
 import 'package:get/get.dart';
 
-class Foodpage extends StatefulWidget {
+class Foodpage extends StatefulHookWidget {
   const Foodpage({
-    Key? key,
+    super.key,
     required this.food,
-  }) : super(key: key);
+  });
 
   final Recomendationfoodmodel food;
 
@@ -24,10 +30,20 @@ class Foodpage extends StatefulWidget {
 }
 
 class _FoodpageState extends State<Foodpage> {
-  final controler = Get.put(Foodcontroller());
-  TextEditingController prefers = TextEditingController();
+  @override
+  void initState() {
+    
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    final Hookresult = getbyResturantId(widget.food.restaurant);
+   
+
+    final controler = Get.put(Foodcontroller());
+    TextEditingController prefers = TextEditingController();
+    controler.loadingAdditives(widget.food.additives);
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.zero,
@@ -67,9 +83,12 @@ class _FoodpageState extends State<Foodpage> {
                   bottom: 10.h,
                   child: CustomButton(
                     onPressed: () {
-                      Get.to(() => Resturantpage(
-                            id: widget.food.id,
-                          ));
+                      if (Hookresult.data != null) {
+                  Get.to(() => Resturantpage(restunarant: Hookresult.data,));
+                } else {
+                  // Handle case where data is not available
+                  print('Restaurant data not available');
+                }
                     },
                     width: 150.w,
                     height: 25.h,
@@ -96,13 +115,15 @@ class _FoodpageState extends State<Foodpage> {
                             fontWeight: FontWeight.w600,
                             color: kdark),
                       ),
-                      Text(
-                        " \$ ${widget.food.price.toStringAsFixed(2)}",
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: kPrimary),
-                      ),
+                      Obx(
+                        () => Text(
+                          " \$ ${(widget.food.price + controler.totalpricevalue) * controler.count.value}",
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: kPrimary),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -149,54 +170,63 @@ class _FoodpageState extends State<Foodpage> {
                     height: 10.h,
                   ),
                   const Text("Additives and Topping",
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                       )),
-                  Column(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: widget.food.additives.length,
-                        itemBuilder: (context, index) {
-                          final additive = widget.food.additives[index];
+                  Obx(
+                    () => Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controler.additivelist.length ?? 0,
+                          itemBuilder: (context, index) {
+                            final additive = controler.additivelist[index];
+                            if (additive == null) {
+                              // Handle null additive case (e.g., display an error message)
+                              return Container(
+                                child: const Text('Additive data missing'),
+                              );
+                            }
 
-                          return CheckboxListTile(
-                            visualDensity: VisualDensity.compact,
-                            dense: true,
-                            activeColor: kPrimary,
-                            contentPadding: EdgeInsets.zero,
-                            value: true, // Adjust this if needed
-                            // secondary : Text(additive.title ?? ''),
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(additive.title),
-                                Obx(
-                                  () => Text(
-                                      '\$${additive.price.toStringAsFixed(2) * controler.count.value}'),
-                                )
-                              ],
-                            ),
-                            onChanged: (bool? value) {
-                              // Handle checkbox change
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                            return CheckboxListTile(
+                              visualDensity: VisualDensity.compact,
+                              dense: true,
+tristate: false,
+                              activeColor: ksecondary,
+                              hoverColor: ksecondary,
+                              contentPadding: EdgeInsets.zero,
+                              value: additive
+                                  .isChecked.value, // Adjust this if needed
+                              // secondary : Text(additive.title ?? ''),
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(additive.title ?? ''),
+                                  Text(
+                                      '\$${additive.price.toStringAsFixed(2) ?? '0.00'}'),
+                                ],
+                              ),
+                              onChanged: (bool? value) {
+                                controler.additivelist[index].toggleChecked();
+                                controler.getTotalPrice();
+                                // Handle checkbox change
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Quantity',
-                        style: TextStyle(
-                            fontSize: 14,
+                      const Text("quantity",
+                          style: TextStyle(
+                            fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: kdark),
-                      ),
+                          )),
                       Row(
                         children: [
                           GestureDetector(
@@ -211,9 +241,10 @@ class _FoodpageState extends State<Foodpage> {
                                 child: Text(
                                   '${controler.count.value}',
                                   style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: kdark),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: kdark,
+                                  ),
                                 ),
                               )),
                           GestureDetector(
@@ -223,19 +254,24 @@ class _FoodpageState extends State<Foodpage> {
                             child: const Icon(AntDesign.minuscircleo),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   SizedBox(
                     height: 15.h,
                   ),
-                  const Text("preferences",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      )),
+                  const Text(
+                    "preferences",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   SizedBox(
-                    height: 15,
+                    height: 10.h,
+                  ),
+                  SizedBox(
+                    height: 50.h,
                     child: CustomTextFieldInContainer(
                       controller: prefers,
                       hintText: 'add your notes',
@@ -243,32 +279,38 @@ class _FoodpageState extends State<Foodpage> {
                     ),
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 20.h,
                   ),
                   Container(
-                    height: 50.h,
+                    height: 35.h,
                     width: width,
-                    decoration: const BoxDecoration(
-                        color: kPrimary,
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30.r)),
+                      color: kPrimary,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomButton(
-                          onPressed: () {
-                            showverfication( context);
-                          },
-                          child: const Text('place order',
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              showverfication(context);
+                            },
+                            child: const Text(
+                              'palace order',
                               style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: kdark)),
+                                  fontSize: 13,
+                                  color: kdark,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
                         ),
-                        CustomButton(
-                          onPressed: () {},
+                        GestureDetector(
+                          onTap: () {},
                           child: CircleAvatar(
+                              radius: 20.h,
                               backgroundColor: ksecondary,
-                              radius: 20.r,
                               child: const Icon(
                                 Ionicons.cart,
                               )),
@@ -285,13 +327,60 @@ class _FoodpageState extends State<Foodpage> {
     );
   }
 
-  Future<dynamic> showverfication(BuildContext contex) {
+  Future<dynamic> showverfication(BuildContext context) {
     return showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            height: 500.h,
-          );
-        });
+      showDragHandle: true,
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.r),
+              topRight: Radius.circular(30.r),
+            ),
+          ),
+          height: 550.h,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.h),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                "verfication Reasons",
+                style: TextStyle(
+                    color: kPrimary, fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Column(
+                children: List.generate(verificationReasons.length, (index) {
+                  return ListTile(
+                    leading: const Icon(
+                      Icons.check_circle_outline,
+                      color: kPrimary,
+                    ),
+                    title: Text(
+                      verificationReasons[index],
+                      style: const TextStyle(
+                        fontSize: 11,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              CustomButton(
+                height: 30.h,
+                width: width * 0.75,
+                color: kPrimary,
+                child: Text('verfiy phonenumber'),
+                onPressed: () {
+                  Get.to(() => const Phoneverfication());
+                },
+              )
+            ]),
+          ),
+        );
+      },
+    );
   }
 }

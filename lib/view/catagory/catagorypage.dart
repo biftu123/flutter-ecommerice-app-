@@ -23,7 +23,7 @@ class Catagorypage extends HookWidget {
       appBar: AppBar(
         title: Text(
           'Explore ${controller.titlevalue} Catagory',
-          style: TextStyle(fontSize: 16, color: kgray, fontWeight: FontWeight.normal),
+          style: const TextStyle(fontSize: 16, color: kgray, fontWeight: FontWeight.normal),
         ),
         centerTitle: true,
         elevation: 0,
