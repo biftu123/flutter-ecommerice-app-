@@ -6,7 +6,7 @@ class EmailTextField extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final TextInputType keyboardType;
-  
+
   EmailTextField({
     required this.controller,
     required this.labelText,
@@ -31,9 +31,29 @@ class EmailTextField extends StatelessWidget {
         labelText: labelText,
         hintText: hintText,
         prefixIcon: Icon(icon),
+        enabledBorder:  const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+          borderRadius: BorderRadius.all(Radius.circular(9.0))
+        ),
+        focusedBorder:const  OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue),
+           borderRadius: BorderRadius.all(Radius.circular(9.0))
+        ),
+        errorBorder:const  OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red),
+           borderRadius: BorderRadius.all(Radius.circular(9.0))
+        ),
+        focusedErrorBorder:const  OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red),
+           borderRadius: BorderRadius.all(Radius.circular(9.0))
+        ),
+        disabledBorder:const  OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+           borderRadius: BorderRadius.all(Radius.circular(9.0))
+        ),
       ),
       keyboardType: keyboardType,
-      validator: (value) => _validateEmail(value!), 
+       validator: (value) => _validateEmail(value!),
     );
   }
 }
