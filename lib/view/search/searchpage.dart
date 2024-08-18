@@ -7,6 +7,7 @@ import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/controller/searchcontroller.dart';
 import 'package:foodorder/view/search/searchresult.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class Searchpage extends StatefulWidget {
   const Searchpage({super.key });
@@ -62,7 +63,11 @@ class _SearchpageState extends State<Searchpage> {
         child: controller.isLoadingValue
             ? CustomShimmerWidget(width: width, height: 70.h)
             : controller.searchResult == null
-            ? CustomContainer(cotaincontaainer: Container(),
+            ? CustomContainer(cotaincontaainer: Container(
+              height: 210.h,
+           child:    Lottie.asset('assets/Animation/bifa.json')
+              
+            ),
             
         
         )

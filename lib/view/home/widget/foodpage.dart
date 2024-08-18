@@ -30,20 +30,23 @@ class Foodpage extends StatefulHookWidget {
 }
 
 class _FoodpageState extends State<Foodpage> {
-  @override
+     final controler = Get.put(Foodcontroller());
+    TextEditingController prefers = TextEditingController();
+     @override
   void initState() {
-    
-    // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controler.loadingAdditives(widget.food.additives);
+    });
   }
+  
   @override
   Widget build(BuildContext context) {
     final Hookresult = getbyResturantId(widget.food.restaurant);
    
 
-    final controler = Get.put(Foodcontroller());
-    TextEditingController prefers = TextEditingController();
-    controler.loadingAdditives(widget.food.additives);
+ 
+  
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.zero,
