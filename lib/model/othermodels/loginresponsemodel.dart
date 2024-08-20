@@ -16,7 +16,7 @@ class Loginresponsemodel {
     final bool verificationAccount;
     final DateTime createdAt;
     final DateTime updatedAt;
-    
+    final int v;
     final String usertoken;
 
     Loginresponsemodel({
@@ -30,7 +30,7 @@ class Loginresponsemodel {
         required this.verificationAccount,
         required this.createdAt,
         required this.updatedAt,
-        
+        required this.v,
         required this.usertoken,
     });
 
@@ -45,7 +45,7 @@ class Loginresponsemodel {
         verificationAccount: json["verificationAccount"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        
+        v: json["__v"],
         usertoken: json["usertoken"],
     );
 
@@ -60,7 +60,7 @@ class Loginresponsemodel {
         "verificationAccount": verificationAccount,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        
+        "__v": v,
         "usertoken": usertoken,
     };
 }

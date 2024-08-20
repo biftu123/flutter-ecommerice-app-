@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/controller/loginController.dart';
 import 'package:foodorder/view/entrypoint.dart';
 import 'package:get/get.dart';
 void main() => runApp(const MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return GetMaterialApp(
+          
           debugShowCheckedModeBanner: false,
           title: 'First Method',
           // You can use the library anywhere in the app even in theme
