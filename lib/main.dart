@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodorder/constant/constant.dart';
-import 'package:foodorder/controller/loginController.dart';
 import 'package:foodorder/view/entrypoint.dart';
 import 'package:get/get.dart';
-void main() => runApp(const MyApp());
+import 'package:firebase_core/firebase_core.dart';
+
+void main()async { 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+ 
+  runApp(const MyApp());}
 Widget defaultpage = MainScreen();
 
 class MyApp extends StatelessWidget {

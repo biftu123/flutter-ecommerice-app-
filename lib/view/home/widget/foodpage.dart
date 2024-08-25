@@ -8,14 +8,18 @@ import 'package:foodorder/Common/custombutton.dart';
 import 'package:foodorder/Common/resubletextfiled.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/controller/foodcontroller.dart';
+import 'package:foodorder/controller/loginController.dart';
 
 import 'package:foodorder/model/hooks/getresturantbyid.dart';
-
+import 'package:foodorder/model/othermodels/loginresponsemodel.dart';
 
 import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
+import 'package:foodorder/view/auth/Loginpage.dart';
 import 'package:foodorder/view/auth/phoneverfication.dart';
+import 'package:foodorder/view/home/widget/order/order.dart';
 import 'package:foodorder/view/home/widget/resturantpage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Foodpage extends StatefulHookWidget {
   const Foodpage({
@@ -30,23 +34,27 @@ class Foodpage extends StatefulHookWidget {
 }
 
 class _FoodpageState extends State<Foodpage> {
-     final controler = Get.put(Foodcontroller());
-    TextEditingController prefers = TextEditingController();
-     @override
+  final controler = Get.put(Foodcontroller());
+  TextEditingController prefers = TextEditingController();
+  final controller = Get.put(LoginController());
+  late GetStorage box;
+  Loginresponsemodel? user;
+  String? token;
+
+  @override
   void initState() {
     super.initState();
+    box = GetStorage();
+    token = box.read('token');
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       controler.loadingAdditives(widget.food.additives);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final Hookresult = getbyResturantId(widget.food.restaurant);
-   
 
- 
-  
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.zero,
@@ -87,11 +95,13 @@ class _FoodpageState extends State<Foodpage> {
                   child: CustomButton(
                     onPressed: () {
                       if (Hookresult.data != null) {
-                  Get.to(() => Resturantpage(restunarant: Hookresult.data,));
-                } else {
-                  // Handle case where data is not available
-                  print('Restaurant data not available');
-                }
+                        Get.to(() => Resturantpage(
+                              restunarant: Hookresult.data,
+                            ));
+                      } else {
+                        // Handle case where data is not available
+                        print('Restaurant data not available');
+                      }
                     },
                     width: 150.w,
                     height: 25.h,
@@ -195,7 +205,7 @@ class _FoodpageState extends State<Foodpage> {
                             return CheckboxListTile(
                               visualDensity: VisualDensity.compact,
                               dense: true,
-tristate: false,
+                              tristate: false,
                               activeColor: ksecondary,
                               hoverColor: ksecondary,
                               contentPadding: EdgeInsets.zero,
@@ -298,7 +308,20 @@ tristate: false,
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: () {
-                              showverfication(context);
+              
+              if (token != null) {
+  user = controller.userinfo();
+} else {
+  Get.to(() => Loginpage());
+}
+
+if (user != null) {
+  if (user!.phoneVerification == false) {
+    showverfication(context);
+  } else {
+    Get.to(() => order());
+  }
+}
                             },
                             child: const Text(
                               'palace order',

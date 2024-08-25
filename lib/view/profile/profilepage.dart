@@ -9,6 +9,7 @@ import 'package:foodorder/controller/loginController.dart';
 import 'package:foodorder/model/othermodels/loginresponsemodel.dart';
 import 'package:foodorder/view/auth/Loginpage.dart';
 import 'package:foodorder/view/auth/userinfowidget.dart';
+import 'package:foodorder/view/home/address/shippingadress.dart';
 import 'package:foodorder/view/profile/profileappbar.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -100,7 +101,11 @@ class _ProfilepageState extends State<Profilepage> {
                   CustomListTile(
                     title: 'shipping Adress',
                     leadingIcon: SimpleLineIcons.location_pin,
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => const Shippingadress(),
+                          transition: Transition.fadeIn,
+                          duration: Duration(microseconds: 900));
+                    },
                     trailing: const Icon(Ionicons.arrow_forward_circle),
                   ),
                   CustomListTile(
