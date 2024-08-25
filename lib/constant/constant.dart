@@ -24,4 +24,4 @@ final List<String> verificationReasons = [
   'Prevent order mix-ups and delays by verifying contact information.',
   'Enhance customer service by having a verified contact number for support.',
 ];
-String googleapikey = "AIzaSyCMPZTb2wVP4Zw5iIqcQmm8TvfJXLJNqtw";
+String googleapikey = "AIzaSyD1_6V3EsMR3VwC4X18TESjSwLmB45IJjw";

@@ -24,7 +24,6 @@ class _CustomappbarState extends State<Customappbar> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
         color: kwhiteoff,
         height: 110.h,
@@ -94,7 +93,8 @@ class _CustomappbarState extends State<Customappbar> {
     }
   }
 
-  /// Determine the current position of the device.R
+  /// Determine the current position of the device.R run
+  ///
   ///
   /// When the location services are not enabled or permissions
   /// are denied the `Future` will return an error.
@@ -140,9 +140,9 @@ class _CustomappbarState extends State<Customappbar> {
         desiredAccuracy: LocationAccuracy.best);
     LatLng currentposition = LatLng(position.longitude, position.latitude);
 
-    
+    usercontroller.setposition(currentposition);
 
-    usercontroller.fetchAddress(currentposition);
+    
     print(currentposition);
   }
 }
