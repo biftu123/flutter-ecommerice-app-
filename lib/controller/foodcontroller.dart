@@ -47,6 +47,17 @@ class Foodcontroller extends GetxController {
     }
     return ads;
   }
+   List<String> getcartList() {
+    List<String> ads = [];
+    for (var additive in additivelist) {
+      if (additive.isChecked.value && !ads.contains(additive.title)) {
+        ads.add(additive.title);
+      } else if (!additive.isChecked.value && ads.contains(additive.title)) {
+        ads.remove(additive.title);
+      }
+    }
+    return ads;
+  }
 
   double getTotalPrice() {
     double totalprice = 0.0;

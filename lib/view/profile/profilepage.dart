@@ -6,6 +6,7 @@ import 'package:foodorder/Common/custom_container.dart';
 import 'package:foodorder/Common/custombutton.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/controller/loginController.dart';
+import 'package:foodorder/controller/userlocationcontroller.dart';
 import 'package:foodorder/model/othermodels/loginresponsemodel.dart';
 import 'package:foodorder/view/auth/Loginpage.dart';
 import 'package:foodorder/view/auth/userinfowidget.dart';
@@ -22,9 +23,11 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
+    final usercontroller = Get.put(UserLocationController());
     final box = GetStorage();
     Loginresponsemodel? user;
     String? token = box.read('token');
@@ -102,7 +105,7 @@ class _ProfilepageState extends State<Profilepage> {
                     title: 'shipping Adress',
                     leadingIcon: SimpleLineIcons.location_pin,
                     onTap: () {
-                      Get.to(() => const Shippingadress(),
+                      Get.to(() => RecordMaps(),
                           transition: Transition.fadeIn,
                           duration: Duration(microseconds: 900));
                     },

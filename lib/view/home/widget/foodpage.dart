@@ -7,10 +7,12 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:foodorder/Common/custombutton.dart';
 import 'package:foodorder/Common/resubletextfiled.dart';
 import 'package:foodorder/constant/constant.dart';
+import 'package:foodorder/controller/cartController.dart';
 import 'package:foodorder/controller/foodcontroller.dart';
 import 'package:foodorder/controller/loginController.dart';
 
 import 'package:foodorder/model/hooks/getresturantbyid.dart';
+import 'package:foodorder/model/othermodels/cartrequstmodel.dart';
 import 'package:foodorder/model/othermodels/loginresponsemodel.dart';
 
 import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
@@ -37,6 +39,7 @@ class _FoodpageState extends State<Foodpage> {
   final controler = Get.put(Foodcontroller());
   TextEditingController prefers = TextEditingController();
   final controller = Get.put(LoginController());
+  final cartcontroller = Get.put(cartController());
   late GetStorage box;
   Loginresponsemodel? user;
   String? token;
@@ -187,7 +190,7 @@ class _FoodpageState extends State<Foodpage> {
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       )),
-                  Obx(
+                       Obx(
                     () => Column(
                       children: [
                         ListView.builder(
@@ -232,6 +235,7 @@ class _FoodpageState extends State<Foodpage> {
                       ],
                     ),
                   ),
+                 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -308,20 +312,19 @@ class _FoodpageState extends State<Foodpage> {
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: () {
-              
-              if (token != null) {
-  user = controller.userinfo();
-} else {
-  Get.to(() => Loginpage());
-}
+                              if (token != null) {
+                                user = controller.userinfo();
+                              } else {
+                                Get.to(() => Loginpage());
+                              }
 
-if (user != null) {
-  if (user!.phoneVerification == false) {
-    showverfication(context);
-  } else {
-    Get.to(() => order());
-  }
-}
+                              if (user != null) {
+                                if (user!.phoneVerification == false) {
+                                  showverfication(context);
+                                } else {
+                                  Get.to(() => order());
+                                }
+                              }
                             },
                             child: const Text(
                               'palace order',
@@ -333,7 +336,25 @@ if (user != null) {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            if (token != null) {
+                              user = controller.userinfo();
+                            } else {
+                              Get.to(() => Loginpage());
+                            }
+                            if (user != null) {
+                              print(widget.food.id);
+                              var model = Cartrequstmodel(
+                                  productId: widget.food.id,
+                                  quantity: controler.count.value,
+                                  totalPrice: (widget.food.price +
+                                          controler.totalpricevalue) *
+                                      controler.count.value,
+                                  additives: controler.getcartList());
+                              String cart = cartrequstmodelToJson(model);
+                              cartcontroller.addcart(cart);
+                            }
+                          },
                           child: CircleAvatar(
                               radius: 20.h,
                               backgroundColor: ksecondary,

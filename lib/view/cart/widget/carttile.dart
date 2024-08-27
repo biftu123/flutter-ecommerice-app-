@@ -4,23 +4,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/controller/cartController.dart';
-import 'package:foodorder/model/othermodels/cartrequstmodel.dart';
-import 'package:foodorder/model/othermodels/recomdationfoodmodel.dart';
-import 'package:foodorder/view/home/widget/foodpage.dart';
+import 'package:foodorder/model/othermodels/cartresponsemodel.dart';
+
 import 'package:get/get.dart';
 
-class Foodtile extends StatelessWidget {
-  final Recomendationfoodmodel food;
+class Carttile extends StatelessWidget {
+  final Cartresponsemodel food;
 
-  const Foodtile({super.key, required this.food});
+  const Carttile({super.key, required this.food});
 
   @override
   Widget build(BuildContext context) {
-    final cartcontroller = Get.put(cartController());
+    final controller = Get.put(cartController());
     return GestureDetector(
-      onTap: () {
-        Get.to(() => Foodpage(food: food));
-      },
+      onTap: () {},
       child: Stack(
         children: [
           Container(
@@ -43,7 +40,7 @@ class Foodtile extends StatelessWidget {
                         SizedBox(
                           width: 60.w,
                           height: 60.h,
-                          child: Image.network(food.imageUrl),
+                          child: Image.network(food.productId.imageUrl),
                         ),
                         Positioned(
                           bottom: 0,
@@ -54,7 +51,7 @@ class Foodtile extends StatelessWidget {
                             width: 0.8.sw,
                             child: RatingBarIndicator(
                               itemCount: 5,
-                              rating: 5,
+                              rating: food.productId.rating.toDouble(),
                               itemSize: 15.h,
                               itemBuilder: (context, index) => const Icon(
                                 Icons.star,
@@ -71,29 +68,29 @@ class Foodtile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        food.title,
+                        food.productId.title,
                         style: const TextStyle(
                           fontSize: 12,
                           color: kdark,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Text(
-                        "Delivery Time: ${food.time}",
-                        style: const TextStyle(
-                          fontSize: 9,
-                          color: kgray,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
+                      // Text(
+                      //"Delivery Time: ${food.time }",
+                      //style: const TextStyle(
+                      // fontSize: 9,
+                      // color: kgray,
+                      //  fontWeight: FontWeight.normal,
+                      // ),
+                      // ),
                       SizedBox(
                         width: 0.6.sw,
                         height: 17.h,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: food.additives.length,
+                          itemCount: food.additive.length,
                           itemBuilder: (context, index) {
-                            var additive = food.additives[index];
+                            var additive = food.additive[index];
                             return Container(
                               margin: EdgeInsets.only(right: 5.w),
                               decoration: BoxDecoration(
@@ -104,7 +101,7 @@ class Foodtile extends StatelessWidget {
                                 child: Padding(
                                   padding: EdgeInsets.all(2.h),
                                   child: Text(
-                                    additive.title,
+                                    additive,
                                     style: const TextStyle(
                                       fontSize: 9,
                                       color: kgray,
@@ -135,7 +132,7 @@ class Foodtile extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  food.price.toString(),
+                  food.totalPrice.toString(),
                   style: const TextStyle(
                     fontSize: 14,
                     color: kwhiteoff,
@@ -150,13 +147,9 @@ class Foodtile extends StatelessWidget {
             top: 6.h,
             child: GestureDetector(
               onTap: () {
-                Cartrequstmodel model = Cartrequstmodel(
-                    productId: food.id,
-                    quantity: 1,
-                    totalPrice: food.price,
-                    additives: []);
-                    String cart = cartrequstmodelToJson(model);
-                cartcontroller.addcart(cart);
+                controller.removecart(food.id);
+                print(food.id);
+                
               },
               child: Container(
                 width: 30.h,
