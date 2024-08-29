@@ -49,9 +49,15 @@ class _FoodpageState extends State<Foodpage> {
     super.initState();
     box = GetStorage();
     token = box.read('token');
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      controler.loadingAdditives(widget.food.additives);
-    });
+
+    // Check if the controller is not null and if the additives are not null before loading
+    if (controler != null &&
+        widget.food != null &&
+        widget.food.additives != null) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        controler.loadingAdditives(widget.food.additives);
+      });
+    }
   }
 
   @override
@@ -190,52 +196,43 @@ class _FoodpageState extends State<Foodpage> {
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       )),
-                       Obx(
-                    () => Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: controler.additivelist.length ?? 0,
-                          itemBuilder: (context, index) {
-                            final additive = controler.additivelist[index];
-                            if (additive == null) {
-                              // Handle null additive case (e.g., display an error message)
-                              return Container(
-                                child: const Text('Additive data missing'),
-                              );
-                            }
+                  Obx(
+                    () => ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controler.additivelist.length,
+                      itemBuilder: (context, index) {
+                        final additive = controler.additivelist[index];
+                        if (additive == null) {
+                          return Container(
+                            child: const Text('Additive data missing'),
+                          );
+                        }
 
-                            return CheckboxListTile(
-                              visualDensity: VisualDensity.compact,
-                              dense: true,
-                              tristate: false,
-                              activeColor: ksecondary,
-                              hoverColor: ksecondary,
-                              contentPadding: EdgeInsets.zero,
-                              value: additive
-                                  .isChecked.value, // Adjust this if needed
-                              // secondary : Text(additive.title ?? ''),
-                              title: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(additive.title ?? ''),
-                                  Text(
-                                      '\$${additive.price.toStringAsFixed(2) ?? '0.00'}'),
-                                ],
-                              ),
-                              onChanged: (bool? value) {
-                                controler.additivelist[index].toggleChecked();
-                                controler.getTotalPrice();
-                                // Handle checkbox change
-                              },
-                            );
+                        return CheckboxListTile(
+                          visualDensity: VisualDensity.compact,
+                          dense: true,
+                          tristate: false,
+                          activeColor: ksecondary,
+                          hoverColor: ksecondary,
+                          contentPadding: EdgeInsets.zero,
+                          value: additive.isChecked.value,
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(additive.title ?? 'Title not available'),
+                              Text(
+                                  '\$${additive.price?.toStringAsFixed(2) ?? '0.00'}'),
+                            ],
+                          ),
+                          onChanged: (bool? value) {
+                            controler.additivelist[index].toggleChecked();
+                            controler.getTotalPrice();
+                            // Handle checkbox change
                           },
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
-                 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -344,13 +341,11 @@ class _FoodpageState extends State<Foodpage> {
                             }
                             if (user != null) {
                               print(widget.food.id);
-                              var model = Cartrequstmodel(
+                              Cartrequstmodel model = Cartrequstmodel(
                                   productId: widget.food.id,
+                                  additives: controler.getcartList(),
                                   quantity: controler.count.value,
-                                  totalPrice: (widget.food.price +
-                                          controler.totalpricevalue) *
-                                      controler.count.value,
-                                  additives: controler.getcartList());
+                                  totalPrice: (widget.food.price + controler.totalpricevalue) * controler.count.value);
                               String cart = cartrequstmodelToJson(model);
                               cartcontroller.addcart(cart);
                             }

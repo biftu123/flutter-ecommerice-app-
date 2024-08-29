@@ -9,18 +9,22 @@ class Cartresponsemodel {
     final String id;
     final String userId;
     final ProductId productId;
-    final List<dynamic> additive;
+    final List<String> additives;
     final int quantity;
     final double totalPrice;
+    final DateTime createdAt;
+    final DateTime updatedAt;
     final int v;
 
     Cartresponsemodel({
         required this.id,
         required this.userId,
         required this.productId,
-        required this.additive,
+        required this.additives,
         required this.quantity,
         required this.totalPrice,
+        required this.createdAt,
+        required this.updatedAt,
         required this.v,
     });
 
@@ -28,9 +32,11 @@ class Cartresponsemodel {
         id: json["_id"],
         userId: json["userId"],
         productId: ProductId.fromJson(json["productId"]),
-        additive: List<dynamic>.from(json["additive"].map((x) => x)),
+        additives: List<String>.from(json["additives"].map((x) => x)),
         quantity: json["quantity"],
-        totalPrice: json["totalPrice"]?.toDouble(),
+        totalPrice: json["totalPrice"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
     );
 
@@ -38,9 +44,11 @@ class Cartresponsemodel {
         "_id": id,
         "userId": userId,
         "productId": productId.toJson(),
-        "additive": List<dynamic>.from(additive.map((x) => x)),
+        "additives": List<dynamic>.from(additives.map((x) => x)),
         "quantity": quantity,
         "totalPrice": totalPrice,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
     };
 }

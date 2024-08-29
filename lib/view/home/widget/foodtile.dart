@@ -154,7 +154,7 @@ class Foodtile extends StatelessWidget {
                     productId: food.id,
                     quantity: 1,
                     totalPrice: food.price,
-                    additives: []);
+                    additives:[]);
                     String cart = cartrequstmodelToJson(model);
                 cartcontroller.addcart(cart);
               },

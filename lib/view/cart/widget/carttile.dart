@@ -8,11 +8,16 @@ import 'package:foodorder/model/othermodels/cartresponsemodel.dart';
 
 import 'package:get/get.dart';
 
-class Carttile extends StatelessWidget {
+class Carttile extends StatefulWidget {
   final Cartresponsemodel food;
 
   const Carttile({super.key, required this.food});
 
+  @override
+  State<Carttile> createState() => _CarttileState();
+}
+
+class _CarttileState extends State<Carttile> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(cartController());
@@ -40,7 +45,7 @@ class Carttile extends StatelessWidget {
                         SizedBox(
                           width: 60.w,
                           height: 60.h,
-                          child: Image.network(food.productId.imageUrl),
+                          child: Image.network(widget.food.productId.imageUrl),
                         ),
                         Positioned(
                           bottom: 0,
@@ -51,7 +56,7 @@ class Carttile extends StatelessWidget {
                             width: 0.8.sw,
                             child: RatingBarIndicator(
                               itemCount: 5,
-                              rating: food.productId.rating.toDouble(),
+                              rating: widget.food.productId.rating.toDouble(),
                               itemSize: 15.h,
                               itemBuilder: (context, index) => const Icon(
                                 Icons.star,
@@ -68,29 +73,29 @@ class Carttile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        food.productId.title,
+                        widget.food.productId.title,
                         style: const TextStyle(
                           fontSize: 12,
                           color: kdark,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      // Text(
-                      //"Delivery Time: ${food.time }",
-                      //style: const TextStyle(
-                      // fontSize: 9,
-                      // color: kgray,
-                      //  fontWeight: FontWeight.normal,
-                      // ),
-                      // ),
+                       Text(
+                      "quntity add to cart: ${widget.food.quantity.toString() }",
+                      style: const TextStyle(
+                     fontSize: 9,
+                     color: kgray,
+                       fontWeight: FontWeight.normal,
+                       ),
+                       ),
                       SizedBox(
                         width: 0.6.sw,
                         height: 17.h,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: food.additive.length,
+                          itemCount: widget.food.additives.length,
                           itemBuilder: (context, index) {
-                            var additive = food.additive[index];
+                            var additive = widget.food.additives[index];
                             return Container(
                               margin: EdgeInsets.only(right: 5.w),
                               decoration: BoxDecoration(
@@ -132,7 +137,7 @@ class Carttile extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  food.totalPrice.toString(),
+                  widget.food.totalPrice.toString(),
                   style: const TextStyle(
                     fontSize: 14,
                     color: kwhiteoff,
@@ -147,8 +152,8 @@ class Carttile extends StatelessWidget {
             top: 6.h,
             child: GestureDetector(
               onTap: () {
-                controller.removecart(food.id);
-                print(food.id);
+                controller.removecart(widget.food.id);
+                print(widget.food.id);
                 
               },
               child: Container(
@@ -163,7 +168,7 @@ class Carttile extends StatelessWidget {
                   size: 30,
                 ),
               ),
-            ),
+            )
           ),
         ],
       ),

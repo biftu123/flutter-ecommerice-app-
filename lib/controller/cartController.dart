@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodorder/constant/constant.dart';
 import 'package:foodorder/model/othermodels/apierror.dart';
-import 'package:foodorder/model/othermodels/cartrequstmodel.dart';
+
+import 'package:foodorder/view/cart/cartpage.dart';
+import 'package:foodorder/view/entrypoint.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -29,16 +31,13 @@ class cartController extends GetxController {
           body: cart);
       print(response.statusCode);
       if (response.statusCode == 200) {
-        var data = cartrequstmodelFromJson(response.body);
-
-        _isLoading.value = false;
         Get.snackbar(
           'Success',
           'You are add successfully !!!',
           backgroundColor: kPrimary,
           snackPosition: SnackPosition.BOTTOM,
         );
-        Get.back();
+        Get.to(() => const Cartpage());
       } else if (response.statusCode == 400) {
         var error = apierrorFromJson(response.body);
         Get.snackbar(
@@ -91,16 +90,12 @@ class cartController extends GetxController {
       );
       print(response.statusCode);
       if (response.statusCode == 200) {
-        var data = cartrequstmodelFromJson(response.body);
-
-        _isLoading.value = false;
         Get.snackbar(
           'Success',
           'You are delete successfully !!!',
           backgroundColor: kPrimary,
           snackPosition: SnackPosition.BOTTOM,
         );
-        Get.back();
       } else if (response.statusCode == 400) {
         var error = apierrorFromJson(response.body);
         Get.snackbar(
@@ -109,7 +104,11 @@ class cartController extends GetxController {
           backgroundColor: kred,
           snackPosition: SnackPosition.BOTTOM,
         );
-      } else if (response.statusCode == 401) {
+         Get.to(() => MainScreen(),
+              transition: Transition.fadeIn,
+              duration: Duration(microseconds: 900));
+        }
+       else if (response.statusCode == 401) {
         Get.snackbar(
           'Error',
           'Unauthorized access. Please add cart.',
